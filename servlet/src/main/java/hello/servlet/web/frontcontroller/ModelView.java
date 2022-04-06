@@ -20,7 +20,7 @@ public class ModelView {
     }
 
     public Map<String, Object> getModel() {
-        return model;
+        return this.model;
     }
 
     public void setModel(Map<String, Object> model) {
