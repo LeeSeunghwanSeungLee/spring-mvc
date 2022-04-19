@@ -27,7 +27,7 @@ public class ValidationItemControllerV2 {
     private final ItemValidator itemValidator;
 
     @InitBinder
-    public void init(WebDataBinder dataBinder) { // ItemValidator -> support , validate 메소드 자동 실행
+    public void init(WebDataBinder dataBinder) {
         dataBinder.addValidators(itemValidator);
     }
 
@@ -39,20 +39,21 @@ public class ValidationItemControllerV2 {
     }
 
     @GetMapping("/{itemId}")
-    public String item(@PathVariable long itemId, Model model) { // 사실은 validation이 존재해야하긴 한다
+    public String item(@PathVariable long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
-        return "validation/v2/addForm";
+        return "validation/v2/item";
     }
 
-    @GetMapping("add")
+    @GetMapping("/add")
     public String addForm(Model model) {
         model.addAttribute("item", new Item());
         return "validation/v2/addForm";
     }
 
-    //@PostMapping("/add")
+    //    @PostMapping("/add")
     public String addItemV1(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
         //검증 로직
         if (!StringUtils.hasText(item.getItemName())) {
             bindingResult.addError(new FieldError("item", "itemName", "상품 이름은 필수 입니다."));
@@ -85,8 +86,9 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-    //@PostMapping("/add")
+    //    @PostMapping("/add")
     public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
         //검증 로직
         if (!StringUtils.hasText(item.getItemName())) {
             bindingResult.addError(new FieldError("item", "itemName", item.getItemName(), false, null, null, "상품 이름은 필수 입니다."));
@@ -119,7 +121,7 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-    //@PostMapping("/add")
+    //    @PostMapping("/add")
     public String addItemV3(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         //검증 로직
@@ -154,7 +156,7 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-    //@PostMapping("/add")
+    //    @PostMapping("/add")
     public String addItemV4(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         log.info("objectName={}", bindingResult.getObjectName());
@@ -191,7 +193,7 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-    //@PostMapping("/add")
+    //    @PostMapping("/add")
     public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         itemValidator.validate(item, bindingResult);
@@ -238,5 +240,5 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-
 }
+
