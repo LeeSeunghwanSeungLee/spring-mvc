@@ -82,7 +82,11 @@ public class HomeController {
 
     @GetMapping("/")
     public String homeLoginV3ArgumentResolver(@Login Member login, Model model) {
+        if (login == null)
+            return "home";
 
+        model.addAttribute("member", login);
+        return "loginHome";
     }
 
 }
